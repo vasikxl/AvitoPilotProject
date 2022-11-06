@@ -1,0 +1,13 @@
+.avito_homepage-components-footer__footer--background {
+    background-color:#191923;
+}
+
+.avito_homepage-components-footer__language-button--color {
+    background-color: #191923 !important;
+    border-color: #FFFFFF !important;
+}
+
+.avito_homepage-components-footer__language-dropdown-menu-item:active {
+    background-color: #191923 !important;
+    color: #FFFFFF !important;
+}

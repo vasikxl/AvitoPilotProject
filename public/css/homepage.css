@@ -1,0 +1,43 @@
+.avito_homepage-component-header__padding {
+    padding-bottom: 20vh;
+}
+
+.avito_homepage-component-tile {
+    margin: 1vh 1vw 1vh 1vw;
+    padding: 5vh 0 5vh 0;
+
+    width:100%;
+    min-width: 200px;
+    min-height: 100px;
+    max-width: 15vw;
+    max-height: 30vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 3px solid #191923;
+
+    cursor: pointer;
+}
+
+.avito_homepage-component-tile__animation:hover {
+    background-color: #191923;
+    -webkit-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+}
+
+.avito_homepage-component-tile__animation:hover > .tile__inner--animation {
+    color: #FFFFFF;
+    -webkit-transition: color 200ms linear;
+    -ms-transition: color 200ms linear;
+    transition: color 200ms linear;
+}
+
+.avito_homepage-component-tile__inner {
+    color: #191923;
+}
+
+
+

@@ -1,0 +1,37 @@
+.avito_homepage-components-header__header--background {
+    background-image: url("/img/bg01.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.avito_homepage-components-header__nav-dropdown-button--color {
+    background-color: #191923 !important;
+}
+
+.avito_homepage-components-header__session-dropdown-button--color {
+    background-color: #191923 !important;
+}
+
+.avito_homepage-components-header__session-dropdown-logout-button--color {
+    background-color: #191923 !important;
+}
+
+.avito_homepage-components-header__header-container--padding-bottom {
+    padding-bottom: 20vh;
+}
+
+.avito_homepage-components-header__nav-dropdown-menu-item:active {
+    background-color: #191923 !important;
+    color: #FFFFFF !important;
+}
+
+.avito_homepage-components-header__nav-dropdown-menu-item--active {
+    background-color: #191923 !important;
+    color: #FFFFFF !important;
+}
+
+.avito_homepage-components-header__session-dropdown-menu-item:active {
+    background-color: #191923 !important;
+    color: #FFFFFF !important;
+}

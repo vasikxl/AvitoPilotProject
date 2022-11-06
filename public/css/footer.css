@@ -1,0 +1,12 @@
+.avito_footer-component-background {
+    background-color:#191923;
+}
+
+.avito_footer-component-language--color {
+    background-color: #191923 !important;
+    border-color: #FFFFFF !important;
+}
+
+.avito_footer-component-text--size {
+    font-size: 0.9em;
+}
