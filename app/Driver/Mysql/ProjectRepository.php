@@ -49,7 +49,6 @@ class ProjectRepository implements ProjectRepositoryInterface {
         return $projectItem;
     }
 
-
     /**
      * Vraci projekt dle jmena projektu.
      *
@@ -67,7 +66,6 @@ class ProjectRepository implements ProjectRepositoryInterface {
         if ($project->count() == 0) {
             throw new NoSuchProjectException();
         }
-        $project = $project->first();
 
         return new ProjectItem($project->id, $project->user_id, $project->slug, $project->name, $project->description,
             $project->userName, $project->created_at, $project->updated_at);

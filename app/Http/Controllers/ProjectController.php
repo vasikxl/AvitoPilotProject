@@ -7,7 +7,12 @@ use App\Models\Project;
 use App\Models\User;
 use App\Notifications\ProjectChange;
 use App\Project\ProjectItemInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 use function App\Helpers\commentRepository;
@@ -60,7 +65,9 @@ class ProjectController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Vraci view pro jednu stranku vsech projektu.
+     *
+     * @return Application|Factory|View
      */
     public function overview()
     {
@@ -79,6 +86,12 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+     * Vraci view pro jednotlivy projekt.
+     *
+     * @param ProjectItemInterface $project
+     * @return Application|Factory|View
+     */
     public function index(ProjectItemInterface $project)
     {
         $tasks = taskRepository()->getTasksByProjectId($project->getId());
@@ -91,10 +104,20 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+     * Vraci view pro vytvoreni projektu.
+     *
+     * @return Application|Factory|View
+     */
     public function create() {
         return view('project.layout.create');
     }
 
+    /**
+     * Vytvari projekt.
+     *
+     * @return Application|RedirectResponse|Redirector
+     */
     public function store() {
         $attributes = request()->validate([
             'name' => ['required', 'min: 3', 'max:255', Rule::unique('projects', 'name')],
@@ -106,6 +129,13 @@ class ProjectController extends Controller
         return redirect('/projects')->with('success', __('messages.createSuccess.project'));
     }
 
+    /**
+     * Vraci view pro upravu projektu.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|Factory|View
+     */
     public function edit(Request $request, string $slug) {
         $project = projectRepository()->getProjectBySlug($slug);
         /*if ($this->authorize('update', auth()->user()->id, $project->getUserId())) {
@@ -116,6 +146,13 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+     * Edituje projekt.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|RedirectResponse|Redirector
+     */
     public function update(Request $request, string $slug) {
         /*if ($request->user()->cannot('update', $project)) {
             return redirect('/projects')->with('error', __('messages.error.permission'));
@@ -141,6 +178,13 @@ class ProjectController extends Controller
         return redirect('/projects')->with('success', __('messages.editSuccess.project'));
     }
 
+    /**
+     * Vraci view pro mazani projektu.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|Factory|View
+     */
     public function remove(Request $request, string $slug) {
         /*if ($request->user()->cannot('delete', $project)) {
             return redirect('/projects')->with('error', __('messages.error.permission'));
@@ -151,6 +195,13 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+     * Maze projekt.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|RedirectResponse|Redirector
+     */
     public function delete(Request $request, string $slug) {
         /*if ($request->user()->cannot('delete', $project)) {
             return redirect('/projects')->with('error', __('messages.error.permission'));

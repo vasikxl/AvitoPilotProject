@@ -189,4 +189,23 @@ class TaskRepository implements TaskRepositoryInterface
         return new TaskItem($task->id, $task->slug, $task->name, $task->projectId, $task->projectName, $task->userName,
             $task->state, $task->type, $task->created_at, $task->updated_at);
     }
+
+    /**
+     * Vraci ukol dle jeho id.
+     *
+     * @param int $taskId
+     * @return TaskItemInterface
+     */
+    public function getTaskById(int $taskId): TaskItemInterface
+    {
+        $task = DB::table('tasks')
+            ->select('tasks.*', 'users.name AS userName', 'projects.name AS projectName', 'projects.id AS projectId')
+            ->where('tasks.id', '=', $taskId)
+            ->join('users', 'tasks.user_id', '=', 'users.id')
+            ->join('projects', 'tasks.project_id', '=', 'projects.id')
+            ->get()->first();
+
+        return new TaskItem($task->id, $task->slug, $task->name, $task->projectId, $task->projectName, $task->userName,
+            $task->state, $task->type, $task->created_at, $task->updated_at);
+    }
 }
