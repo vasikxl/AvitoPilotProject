@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ asset('/avito/general/components/header.css') }}">
+<link rel="stylesheet" href="{{ asset('/avito/general/components/footer.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/header.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/footer.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/dropdown.css') }}">

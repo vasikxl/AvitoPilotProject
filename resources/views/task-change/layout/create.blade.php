@@ -7,7 +7,7 @@
             @csrf
             <div class="avito_task-change-layout-create__contents-form-project-name form-group">
                 <label for="task_name">{{ __("object-names.project.project") }}</label>
-                <input class="avito_task-change-layout-create__contents-form-project-name-input form-control" type="text" id="task_name" name="task_name" value="{{ $task->name }}"
+                <input class="avito_task-change-layout-create__contents-form-project-name-input form-control" type="text" id="task_name" name="task_name" value="{{ $task->getName() }}"
                        readonly required>
             </div>
             @error("task_name")

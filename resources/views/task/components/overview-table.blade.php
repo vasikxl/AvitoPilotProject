@@ -1,23 +1,23 @@
-<table class="table table--projects">
-    <thead>
-    <tr>
-        <th scope="col" style="width:20%;">{{ __("object-names.task.name") }}</th>
-        <th style="width:15%;" scope="col">{{ __("object-names.project.project") }}</th>
-        <th scope="col">{{ __("object-names.user.author") }}</th>
-        <th scope="col">{{ __("object-names.task.type") }}</th>
-        <th scope="col">{{ __("object-names.task.state") }}</th>
-        <th scope="col">{{ __("object-names.task.created") }}</th>
-        <th scope="col">{{ __("object-names.task.finished") }}</th>
+<table class="avito_task-components-overview-table__table table table--projects">
+    <thead class="avito_task-components-overview-table__table-head">
+    <tr class="avito_task-components-overview-table__table-head-row">
+        <th class="avito_task-components-overview-table__table-head-row-name" scope="col" style="width:20%;">{{ __("object-names.task.name") }}</th>
+        <th class="avito_task-components-overview-table__table-head-row-project-name" style="width:15%;" scope="col">{{ __("object-names.project.project") }}</th>
+        <th class="avito_task-components-overview-table__table-head-row-user-name" scope="col">{{ __("object-names.user.author") }}</th>
+        <th class="avito_task-components-overview-table__table-head-row-type" scope="col">{{ __("object-names.task.type") }}</th>
+        <th class="avito_task-components-overview-table__table-head-row-state" scope="col">{{ __("object-names.task.state") }}</th>
+        <th class="avito_task-components-overview-table__table-head-row-created" scope="col">{{ __("object-names.task.created") }}</th>
+        <th class="avito_task-components-overview-table__table-head-row-finished" scope="col">{{ __("object-names.task.finished") }}</th>
         <th scope="col">&nbsp</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="avito_task-components-overview-table__table-body">
     @foreach($tasks as $task)
-        <tr>
-            <th class="align-middle" scope="row">{{ $task->getName() }}</th>
-            <td class="align-middle">{{ $task->getProjectName() }}</td>
-            <td class="align-middle">{{ $task->getUserName() }}</td>
-            <td class="align-middle">
+        <tr class="avito_task-components-overview-table__table-body-row">
+            <th class="avito_task-components-overview-table__table-body-name align-middle" scope="row">{{ $task->getName() }}</th>
+            <td class="avito_task-components-overview-table__table-body-project-name align-middle">{{ $task->getProjectName() }}</td>
+            <td class="avito_task-components-overview-table__table-body-user-name align-middle">{{ $task->getUserName() }}</td>
+            <td class="avito_task-components-overview-table__table-body-type align-middle">
                 <h5>
                         <span class="badge {{ $task->getTaskTypeBadge() }}">
                             <i class="fa-solid {{ $task->getTaskTypeIcon() }}"></i>
@@ -25,7 +25,7 @@
                         </span>
                 </h5>
             </td>
-            <td class="align-middle">
+            <td class="avito_task-components-overview-table__table-body-state align-middle">
                 <h5>
                         <span class="badge {{ $task->getTaskStateBadge() }}">
                             <i class="fa-solid {{ $task->getTaskStateIcon() }}"></i>
@@ -33,14 +33,14 @@
                         </span>
                 </h5>
             </td>
-            <td class="align-middle">
+            <td class="avito_task-components-overview-table__table-body-created-at align-middle">
                 {{ $task->getCreatedAt() }}
             </td>
-            <td class="align-middle">
+            <td class="avito_task-components-overview-table__table-body-finished-at align-middle">
                 {{ $task->getTaskFinishedAt() }}
             </td>
 
-            <td class="text-right align-middle" style="width:18%;">
+            <td class="avito_task-components-overview-table__table-body-action text-right align-middle" style="width:18%;">
                                 <span class="fa-stack fa">
                                     <a href="/task/{{ $task->getSlug() }}/index">
                                         <i class="fa-solid fa-square fa-stack-2x text-primary"></i>
