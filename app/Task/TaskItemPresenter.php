@@ -69,7 +69,7 @@ class TaskItemPresenter implements TaskItemPresenterInterface
     {
         return match ($state) {
             'rejected', 'done' => $updatedAt,
-            default => 'Not finished yet',
+            default => 'Not finished yet.',
         };
     }
 }
