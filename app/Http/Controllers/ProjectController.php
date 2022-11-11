@@ -74,15 +74,14 @@ class ProjectController extends Controller
         $projects = array_key_exists('search', request(['search'])) ?
             projectRepository()->getAllProjectsByName(request(['search'])['search']) :
             projectRepository()->getAllProjectsPaginated();
-        $projectIds = $projects->map(function ($item) {
-            return $item->getId();
-        });
 
-        $tasks = taskRepository()->getTasksTypesAndStatesByProjectIds($projectIds);
+        $projectTasksCount = $projects->getCollection()->map(function($project) {
+            return $project->calculateProjectsToTasks();
+        });
 
         return view('project.layout.overview', [
             'rows' => $projects,
-            'projectsToTasks' => $this->projectsToTasks($projects, $tasks),
+            'projectsToTasks' => $projectTasksCount
         ]);
     }
 

@@ -25,6 +25,8 @@ class CommentRepositoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__.'/../../config/courier.php' => config_path('courier.php'),
+        ]);
     }
 }

@@ -39,27 +39,27 @@
 
             @foreach($tasks as $task)
                 <tr>
-                    <td>{{ $task->name }}</td>
+                    <td>{{ $task->getName() }}</td>
                     <td>
                         <h5>
-                            <span class="badge @include("general.components.badgeTypeColor", ["type" => $task->type])">
-                                <i class="fa-solid @include("general.components.badgeTypeIcon", ["type" => $task->type])"></i>
-                                {{ ucfirst($task->type) }}
+                            <span class="badge {{ $task->getTaskTypeBadge() }}">
+                                <i class="fa-solid {{ $task->getTaskTypeIcon() }}"></i>
+                                {{ ucfirst($task->getType()) }}
                             </span>
                         </h5>
                     </td>
                     <td>
                         <h5>
                             <span
-                                class="badge @include("general.components.badgeStateColor", ["state" => $task->state])">
-                                <i class="fa-solid @include("general.components.badgeStateIcon", ["state" => $task->state])"></i>
-                                {{ ucfirst($task->state) }}
+                                class="badge {{ $task->getTaskStateBadge() }}">
+                                <i class="fa-solid {{ $task->getTaskStateIcon() }}"></i>
+                                {{ ucfirst($task->getState()) }}
                             </span>
                         </h5>
                     </td>
                     <td>
                         <span class="fa-stack fa">
-                                    <a href="/task/{{ $task->slug }}/index">
+                                    <a href="/task/{{ $task->getSlug() }}/index">
                                         <i class="fa-solid fa-square fa-stack-2x text-primary"></i>
                                         <i class="fa-solid fa-magnifying-glass-plus fa-stack-1x fa-inverse"></i>
                                     </a>

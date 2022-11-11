@@ -5,7 +5,9 @@ namespace App\Driver\Mysql;
 
 use App\Item\AbstractItem;
 use App\Project\ProjectItemInterface;
+use Illuminate\Support\Collection;
 use function App\Helpers\projectRepository;
+use function App\Helpers\taskRepository;
 
 /**
  * Object pro projekty.
@@ -16,7 +18,7 @@ class ProjectItem extends AbstractItem implements ProjectItemInterface {
     private string $slug;
     private string $name;
     private string $description;
-    private string $userName;
+    private string|null $userName;
     private string $createdAt;
     private string $updatedAt;
 
@@ -24,14 +26,15 @@ class ProjectItem extends AbstractItem implements ProjectItemInterface {
      * Vrací novou instanci třídy ProjectItem.
      *
      * @param int $id
+     * @param int $userId
      * @param String $slug
      * @param String $name
      * @param String $description
-     * @param String $userName
+     * @param String|null $userName
      * @param String $createdAt
      * @param String $updatedAt
      */
-    function __construct(int $id, int $userId, String $slug, String $name, String $description, String $userName,
+    function __construct(int $id, int $userId, String $slug, String $name, String $description, String|null $userName,
                          String $createdAt, String $updatedAt) {
         $this->id = $id;
         $this->userId = $userId;
@@ -125,6 +128,19 @@ class ProjectItem extends AbstractItem implements ProjectItemInterface {
         return $this->userName;
     }
 
+
+    /**
+     * Nastavuje jmeno autora projektu.
+     *
+     * @param string $userName
+     * @return void
+     */
+    public function setUserName(string $userName) : void
+    {
+        $this->userName = $userName;
+    }
+
+
     /**
      * Vrací createdAt timestamp.
      *
@@ -153,5 +169,53 @@ class ProjectItem extends AbstractItem implements ProjectItemInterface {
     public function save(): void
     {
         projectRepository()->update($this->id, $this->name, $this->description);
+    }
+
+
+    /**
+     * Vraci pole s pocty ukolu projektu dle stavu.
+     *
+     * @return array
+     */
+    public function calculateProjectsToTasks() : Collection {
+        $tasks = taskRepository()->getTasksByProjectId($this->id);
+        $issues = $tasks->filter(function($task) {
+            return $task->getType() == 'issue';
+        });
+        $requests = $tasks->filter(function($task) {
+            return $task->getType() == 'request';
+        });
+
+        return collect([
+            'projectId' => $this->id,
+            'issue' => [
+                'new' => $issues->filter(function($task) {
+                    return $task->getState() == 'new';
+                })->count(),
+                'processing' => $issues->filter(function($task) {
+                    return $task->getState() == 'processing';
+                })->count(),
+                'done' => $issues->filter(function($task) {
+                    return $task->getState() == 'done';
+                })->count(),
+                'rejected' => $issues->filter(function($task) {
+                    return $task->getState() == 'rejected';
+                })->count()
+            ],
+            'request' => [
+                'new' => $requests->filter(function($task) {
+                    return $task->getState() == 'new';
+                })->count(),
+                'processing' => $requests->filter(function($task) {
+                    return $task->getState() == 'processing';
+                })->count(),
+                'done' => $requests->filter(function($task) {
+                    return $task->getState() == 'done';
+                })->count(),
+                'rejected' => $requests->filter(function($task) {
+                    return $task->getState() == 'rejected';
+                })->count()
+            ]
+        ]);
     }
 }

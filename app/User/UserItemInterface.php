@@ -3,6 +3,7 @@
 namespace App\User;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
 
 interface UserItemInterface

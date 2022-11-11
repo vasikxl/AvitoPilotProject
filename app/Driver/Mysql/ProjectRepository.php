@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use function App\Helpers\projectSearchQueryBuilder;
+use function App\Helpers\userRepository;
 
 /**
  * Driver pro práci s projektovou databází.
@@ -79,14 +80,26 @@ class ProjectRepository implements ProjectRepositoryInterface {
     public function getAllProjectsPaginated() : LengthAwarePaginator {
         $projects = DB::table('projects')
             ->select('projects.name AS projectName', 'projects.description', 'projects.id', 'projects.user_id',
-                'projects.slug', 'users.name AS userName', 'projects.created_at', 'projects.updated_at')
-            ->join('users', 'projects.user_id', '=', 'users.id')
+                'projects.slug', 'projects.created_at', 'projects.updated_at')
             ->paginate();
-
         $projects->getCollection()->transform(function ($project) {
             return new ProjectItem($project->id, $project->user_id, $project->slug, $project->projectName, $project->description,
-                $project->userName, $project->created_at, $project->updated_at);
+                null, $project->created_at, $project->updated_at);
         });
+
+        $users = userRepository()->getUsersByIds($projects->getCollection()->map(function ($project) {
+            return $project->getUserId();
+        }))->unique();
+
+        $projects->getCollection()->each(function ($project) use ($users) {
+            $matchingUser = $users->filter(function ($user) use ($project) {
+                return $user->getId() == $project->getUserId();
+            })->first();
+
+            $project->setUserName($matchingUser->getName());
+        });
+
+
         return $projects;
     }
 

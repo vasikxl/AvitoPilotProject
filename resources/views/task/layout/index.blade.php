@@ -23,16 +23,16 @@
                 <td>{{ $task->getUserName() }}</td>
                 <td>
                     <h5>
-                            <span class="badge {{ $task->get }}">
-                                <i class="fa-solid @include("general.components.badgeTypeIcon", ["type" => $task->getType()])"></i>
+                            <span class="badge {{ $task->getTaskTypeBadge() }}">
+                                <i class="fa-solid {{ $task->getTaskTypeIcon() }}"></i>
                                 {{ ucfirst($task->getType()) }}
                             </span>
                     </h5>
                 </td>
                 <td>
                     <h5>
-                        <span class="badge @include("general.components.badgeStateColor", ["state" => $task->getState()])">
-                                    <i class="fa-solid @include("general.components.badgeStateIcon", ["state" => $task->getState()])"></i>
+                        <span class="badge {{ $task->getTaskStateBadge() }}">
+                                    <i class="fa-solid {{ $task->getTaskStateIcon() }}"></i>
                                     {{ ucfirst($task->getState()) }}
                                 </span>
                     </h5>

@@ -1,18 +1,18 @@
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">{{ __("object-names.user.user") }}</th>
-        <th scope="col">{{ __("object-names.user.email") }}</th>
-        <th scope="col">&nbsp</th>
+<table class="avito_user-components-overview-table__table table">
+    <thead class="avito_user-components-overview-table__table-head">
+    <tr class="avito_user-components-overview-table__table-head-contents">
+        <th class="avito_user-components-overview-table__table-head-contents-value" scope="col">{{ __("object-names.user.user") }}</th>
+        <th class="avito_user-components-overview-table__table-head-contents-value" scope="col">{{ __("object-names.user.email") }}</th>
+        <th class="avito_user-components-overview-table__table-head-contents-value" scope="col">&nbsp</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="avito_user-components-overview-table__table-body">
     @foreach($users as $user)
-        <tr>
-            <th class="align-middle" scope="row">{{ $user->getName() }}</th>
-            <td class="align-middle">{{ $user->getEmail() }}</td>
+        <tr class="avito_user-components-overview-table__table-row">
+            <th class="avito_user-components-overview-table__table-row-name align-middle" scope="row">{{ $user->getName() }}</th>
+            <td class="avito_user-components-overview-table__table-row-email align-middle">{{ $user->getEmail() }}</td>
 
-            <td class="text-right align-middle" style="width: 15%">
+            <td class="avito_user-components-overview-table__table-row-action text-right align-middle" style="width: 15%">
                 <span class="fa-stack fa">
                     <a href="/user/{{ $user->getSlug() }}/index">
                         <i class="fa-solid fa-square fa-stack-2x text-primary"></i>

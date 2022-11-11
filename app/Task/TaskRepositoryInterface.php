@@ -9,7 +9,7 @@ interface TaskRepositoryInterface
 {
     public function getTaskBySlug(string $slug) : TaskItemInterface;
     public function getTasksByProjectId(int $projectId) : Collection;
-    public function getTasksTypesAndStatesByProjectIds(Collection $projectIds) : Collection;
+    public function GetTasksByProjectIds(Collection $projectIds) : Collection;
     public function getTasksByNameStateAndType(String $name, String $state, String $type) : LengthAwarePaginator;
     public function getTaskByName(string $name) : TaskItemInterface;
     public function getTaskById(int $taskId) : TaskItemInterface;

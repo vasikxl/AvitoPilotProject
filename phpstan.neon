@@ -1,0 +1,11 @@
+includes:
+
+- ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+paths:
+
+- workbench/avito
+
+level: 3

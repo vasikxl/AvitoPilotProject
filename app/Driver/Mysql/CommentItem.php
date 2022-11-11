@@ -10,29 +10,32 @@ use function App\Helpers\projectRepository;
 class CommentItem extends AbstractItem implements CommentItemInterface
 {
     private int $id;
-    private int $projectId;
-    private int $userId;
-    private string $userName;
-    private string $fileName;
+    private int|null $projectId;
+    private int|null $userId;
+    private string|null $userName;
+    private string|null $fileName;
     private string $filePath;
-    private string $comment;
-    private string $createdAt;
-    private string $updatedAt;
+    private string|null $comment;
+    private string|null $createdAt;
+    private string|null $updatedAt;
 
     /**
      * Vraci novou instanci tridy CommentItem
      *
      * @param int $id
-     * @param int $projectId
-     * @param int $userId
-     * @param string $userName
-     * @param string $fileName
+     * @param int|null $projectId
+     * @param int|null $userId
+     * @param string|null $userName
+     * @param string|null $fileName
      * @param string $filePath
-     * @param string $comment
+     * @param string|null $comment
+     * @param string|null $createdAt
+     * @param string|null $updatedAt
      */
 
-    public function __construct(int $id, int $projectId, int $userId, string $userName,
-                                string $fileName, string $filePath, string $comment, string $createdAt, string $updatedAt)
+    public function __construct(int $id, int|null $projectId, int|null $userId, string|null $userName,
+                                string|null $fileName, string $filePath, string|null $comment, string|null $createdAt,
+                                string|null $updatedAt)
     {
         $this->id = $id;
         $this->projectId = $projectId;

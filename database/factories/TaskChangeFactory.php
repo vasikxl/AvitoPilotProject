@@ -17,7 +17,7 @@ class TaskChangeFactory
                 ->insertGetId([
                     'user_id' => $userId,
                     'task_id' => $taskId,
-                    'new_state' => fake()->randomElement(\App\Models\Task::$states),
+                    'new_state' => fake()->randomElement(["new", "processing", "done", "rejected"]),
                     'comment' => fake()->paragraph(),
                     'created_at' => now(),
                     'updated_at' => now()

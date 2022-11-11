@@ -64,7 +64,7 @@ class CommentController extends Controller
      * @return StreamedResponse
      */
     public function download(int $commentId) {
-        $comment = commentRepository()->getCommentById($commentId);
+        $comment = commentRepository()->getOnlyCommentFilePath($commentId);
         return Storage::download("public/comment_attachments/{$comment->getFilePath()}");
     }
 }
