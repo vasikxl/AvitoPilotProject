@@ -12,6 +12,21 @@ use Illuminate\Support\Str;
 class UserRepository implements UserRepositoryInterface
 {
     /**
+     * Vraci pouze email a heslo dle id uzivatele.
+     *
+     * @param int $id
+     * @return UserItemInterface
+     */
+    public function getUserEmailPasswordById(int $id) : UserItemInterface
+    {
+        $user = DB::table('user_email_password_view')
+            ->where('id', '=', $id)
+            ->get()->first();
+
+        return new UserItem($user->id, null, null, $user->email, $user->password, null, null);
+    }
+
+    /**
      * Ziska uzivatele dle jeho id.
      *
      * @param int $id
@@ -74,6 +89,27 @@ class UserRepository implements UserRepositoryInterface
             ->paginate();
 
         $users->getCollection()->transform(function ($user) {
+            return new UserItem($user->id, $user->slug, $user->name, $user->email, $user->password,
+                $user->created_at, $user->updated_at);
+        });
+
+        return $users;
+    }
+
+
+    /**
+     * Vraci vsechny uzivatele dle zadanych id.
+     *
+     * @param Collection $userIds
+     * @return Collection
+     */
+    public function getUsersByIds(Collection $userIds) : Collection
+    {
+        $users = DB::table('users')
+            ->whereIn('id', $userIds)
+            ->get();
+
+        $users->transform(function ($user) {
             return new UserItem($user->id, $user->slug, $user->name, $user->email, $user->password,
                 $user->created_at, $user->updated_at);
         });

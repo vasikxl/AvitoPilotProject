@@ -37,7 +37,7 @@ class TaskRepository implements TaskRepositoryInterface
             ->join('projects', 'tasks.project_id', '=', 'projects.id')
             ->get();
 
-        $tasks->map(function ($task) {
+        $tasks->transform(function ($task) {
             return new TaskItem($task->id, $task->slug, $task->name, $task->projectId, $task->projectName,
                 $task->userName, $task->state, $task->type, $task->created_at, $task->updated_at);
         });
@@ -51,7 +51,7 @@ class TaskRepository implements TaskRepositoryInterface
      * @param Collection $projectIds
      * @return Collection[TaskItem]
      */
-    public function getTasksTypesAndStatesByProjectIds(Collection $projectIds) : Collection {
+    public function GetTasksByProjectIds(Collection $projectIds) : Collection {
         $tasks = DB::table('tasks')
             ->whereIn('project_id', $projectIds)
             ->select('tasks.id', 'tasks.name', 'tasks.type', 'tasks.state', 'tasks.created_at', 'tasks.updated_at',
@@ -182,6 +182,25 @@ class TaskRepository implements TaskRepositoryInterface
         $task = DB::table('tasks')
             ->select('tasks.*', 'users.name AS userName', 'projects.name AS projectName', 'projects.id AS projectId')
             ->where('tasks.name', '=', $name)
+            ->join('users', 'tasks.user_id', '=', 'users.id')
+            ->join('projects', 'tasks.project_id', '=', 'projects.id')
+            ->get()->first();
+
+        return new TaskItem($task->id, $task->slug, $task->name, $task->projectId, $task->projectName, $task->userName,
+            $task->state, $task->type, $task->created_at, $task->updated_at);
+    }
+
+    /**
+     * Vraci ukol dle jeho id.
+     *
+     * @param int $taskId
+     * @return TaskItemInterface
+     */
+    public function getTaskById(int $taskId): TaskItemInterface
+    {
+        $task = DB::table('tasks')
+            ->select('tasks.*', 'users.name AS userName', 'projects.name AS projectName', 'projects.id AS projectId')
+            ->where('tasks.id', '=', $taskId)
             ->join('users', 'tasks.user_id', '=', 'users.id')
             ->join('projects', 'tasks.project_id', '=', 'projects.id')
             ->get()->first();

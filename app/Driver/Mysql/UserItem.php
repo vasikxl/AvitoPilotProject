@@ -10,25 +10,26 @@ use function App\Helpers\userRepository;
 class UserItem extends AbstractItem implements UserItemInterface
 {
     private int $id;
-    private String $slug;
-    private String $name;
-    private String $email;
-    private String $password;
-    private String $createdAt;
-    private String $updatedAt;
+    private string $slug;
+    private string $name;
+    private string $email;
+    private string $password;
+    private string $createdAt;
+    private string $updatedAt;
 
     /**
      * Vraci novou instance tridy UserItem.
      *
      * @param int $id
-     * @param String $slug
-     * @param String $name
-     * @param String $email
-     * @param String $password
-     * @param String $createdAt
-     * @param String $updatedAt
+     * @param string $slug
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @param string $createdAt
+     * @param string $updatedAt
      */
-    public function __construct(int $id, string $slug, string $name, string $email, string $password, String $createdAt, String $updatedAt)
+    public function __construct(int $id, string $slug, string $name, string $email, string $password,
+                                string $createdAt, string $updatedAt)
     {
         $this->id = $id;
         $this->slug = $slug;
@@ -52,7 +53,7 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Vraci slug uzivatele.
      *
-     * @return String
+     * @return string
      */
     public function getSlug(): string
     {
@@ -62,7 +63,7 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Vraci jmeno uzivatele
      *
-     * @return String
+     * @return string
      */
     public function getName(): string
     {
@@ -72,7 +73,7 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Nastavuje nove jmeno uzivatele.
      *
-     * @param String $name
+     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -82,7 +83,7 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Vraci e-mail uzivatele.
      *
-     * @return String
+     * @return string
      */
     public function getEmail(): string
     {
@@ -92,7 +93,7 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Nastavuje novy e-mail uzivatele.
      *
-     * @param String $email
+     * @param string $email
      */
     public function setEmail(string $email): void
     {
@@ -102,7 +103,7 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Vraci heslo uzivatele.
      *
-     * @return String
+     * @return string
      */
     public function getPassword(): string
     {
@@ -112,7 +113,7 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Nastavuje nove heslo uzivatele.
      *
-     * @param String $password
+     * @param string $password
      */
     public function setPassword(string $password): void
     {
@@ -122,9 +123,9 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Vraci createdAt timestamp.
      *
-     * @return String
+     * @return string
      */
-    public function getCreatedAt(): String
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
@@ -132,9 +133,9 @@ class UserItem extends AbstractItem implements UserItemInterface
     /**
      * Vraci updatedAt timestamp.
      *
-     * @return String
+     * @return string
      */
-    public function getUpdatedAt(): String
+    public function getUpdatedAt(): string
     {
         return $this->updatedAt;
     }

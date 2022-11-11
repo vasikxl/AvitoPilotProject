@@ -41,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('projectSlug', function($slug) {
             return projectRepository()->getProjectBySlug($slug);
         });
+
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
     }
 
     /**

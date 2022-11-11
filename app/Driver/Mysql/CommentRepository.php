@@ -11,6 +11,23 @@ use Illuminate\Support\Str;
 class CommentRepository implements CommentRepositoryInterface {
 
     /**
+     * Vraci pouze cestu k souboru komentare a jeho id.
+     *
+     * @param int $id
+     * @return CommentItem
+     */
+    public function getOnlyCommentFilePath(int $id) : CommentItemInterface
+    {
+        $comment = DB::table('comment_file_path_view')
+            ->select('file_path', 'id')
+            ->where('id', $id)
+            ->get()->first();
+
+        return new CommentItem($comment->id, null, null, null,
+            null, $comment->file_path, null, null, null);
+    }
+
+    /**
      * Vraci vsechny komentare k prislusnemu id projektu.
      *
      * @param int $projectId

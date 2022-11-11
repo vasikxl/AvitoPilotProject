@@ -8,7 +8,7 @@
 
 namespace App\Helpers;
 
-use App\ProjectCollection\ProjectCollection;
+use App\Project\Collection\ProjectCollection;
 
 if (!function_exists(__NAMESPACE__ . 'projectCollection')) {
     /**

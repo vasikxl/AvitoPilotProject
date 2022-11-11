@@ -4,19 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\TaskChange;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Validation\Rule;
 use function App\Helpers\taskChangeRepository;
 use function App\Helpers\taskRepository;
 
 class TaskChangeController extends Controller
 {
-    public function create(Task $task) {
+    /**
+     * Vraci view pro vytvoreni nove zmeny ukolu.
+     *
+     * @param string $slug
+     * @return Application|Factory|View
+     */
+    public function create(string $slug) {
         return view("task-change.layout.create", [
-            "task" => $task
+            "task" => taskRepository()->getTaskBySlug($slug)
         ]);
     }
 
+    /**
+     * Uklada novou zmenu ukolu.
+     *
+     * @return Application|RedirectResponse|Redirector
+     */
     public function store() {
         $attributes = request()->validate([
             "new_state" => ["required", Rule::in(["New", "Processing", "Done", "Rejected"])],

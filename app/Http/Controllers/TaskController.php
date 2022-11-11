@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Driver\Mysql\TaskItem;
 use App\Project\Exception\NoSuchProjectException;
 use App\Task\TaskItemPresenter;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Validation\Rule;
 use function App\Helpers\projectRepository;
 use function App\Helpers\taskChangeRepository;
@@ -13,6 +18,12 @@ use function App\Helpers\taskRepository;
 
 class TaskController extends Controller
 {
+    /**
+     * Vraci view pro stranku jednotliveho ukolu.
+     *
+     * @param String $slug
+     * @return Application|Factory|View
+     */
     public function index(String $slug)
     {
         $task = taskRepository()->getTaskBySlug($slug);
@@ -23,6 +34,11 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * Vraci view pro stranku jedne stranky vsech ukolu.
+     *
+     * @return Application|Factory|View
+     */
     public function overview()
     {
         $name = array_key_exists('name', request(['name']))
@@ -42,6 +58,12 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * Vraci view pro stranku vytvareni ukolu.
+     *
+     * @return Application|Factory|View
+     */
+
     public function create() {
         $projects = projectRepository()->getAllProjects();
         $projectNames = $projects->map(function ($project) {
@@ -52,6 +74,12 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * Vraci view pro stranku vytvareni ukolu s predem zvolenym projektem.
+     *
+     * @param string $slug
+     * @return Application|Factory|View
+     */
     public function createWithDefault(string $slug) {
         $projects = projectRepository()->getAllProjects();
         $projectNames = $projects->map(function ($project) {
@@ -63,6 +91,11 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * Uklada novy ukol.
+     *
+     * @return Application|RedirectResponse|Redirector
+     */
     public function store() {
         $attributes = request()->validate([
             "project_name" => ["required", "min: 3", "max:255", Rule::exists("projects", "name")],
@@ -81,6 +114,13 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * Vraci view pro stranku editovani ukolu.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|Factory|View
+     */
     public function edit(Request $request, string $slug) {
         /*if ($request->user()->cannot("update", $task)) {
             return redirect("/tasks")->with("error", __("messages.error.permission"));
@@ -91,6 +131,13 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * Aktualizuje ukol.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|RedirectResponse|Redirector
+     */
     public function update(Request $request, string $slug) {
         /*if ($request->user()->cannot("update", $task)) {
             return redirect("/tasks")->with("error", __("messages.error.permission"));
@@ -114,6 +161,13 @@ class TaskController extends Controller
         return redirect("/tasks")->with("success", __("messages.editSuccess.task"));
     }
 
+    /**
+     * Vraci view pro stranku mazani ukolu.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|Factory|View
+     */
     public function remove(Request $request, string $slug) {
         /*if ($request->user()->cannot("delete", $task)) {
             return redirect("/tasks")->with("error", __("messages.error.permission"));
@@ -124,6 +178,13 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * Maze ukol.
+     *
+     * @param Request $request
+     * @param string $slug
+     * @return Application|RedirectResponse|Redirector
+     */
     public function delete(Request $request, string $slug) {
         /*if ($request->user()->cannot("delete", $task)) {
             return redirect("/tasks")->with("error", __("messages.error.permission"));
